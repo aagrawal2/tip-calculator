@@ -22,17 +22,16 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://imgur.com/XTh4wty.gif' title='Tip Calculator' width='' alt='tippo' />
+<img src='http://imgur.com/pTQDbsr.gif' title='Tip Calculator' width='' alt='tippo' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-* [ ] The youtube video in the documentation uses 'Xcode 7.0' & 'Deployment target 9.3'. As a new bee I ended up installing latest Xcode 8.x and so it is not trivial to follow the video as this versioning is not mentioned anywhere and later on found that it does make difference when I implement the same thing using Xcode 8. 
+* [ ] The youtube video in the documentation uses 'Xcode 7.0' & 'Deployment target 9.3'. As a new bee I ended up installing latest Xcode 8.x, when I followed the video I realized Xcode and Swift version does make difference. To make it seamless experience for a new user, I think it would be nice if we can ask user to setup the same versions of softwares which is followed by the video.  
 * [ ] With Xcode 8.0 - It was a bit of challenge to trigger a function when tip percentage changes in segment control.
 In other words use of 'Connect action' siege from segment control to a @IBAction func is not straighforward. By default the func is deifned with 'sender:Any' parameter and it took soemtime to figure out that with Xcode8 it should be 'sender:AnyObject' parameter and then only I can use 'Connect action' siege.  
-* [ ] The app works as expected with iPhone 7Plus only. It's not working as expected with iPhone 5s simulator as shown in video. I am yet to get chance to figure out the root cause. So far I believe it might be coz 'Xcode & deployment target' version difference as explained above.  
-
+* [ ] NSUserDefaults mentioned in the documentation mentions use like "let defaults = NSUserDefaults.standardUserDefaults()" while in Swift3 looks like we can't instantiate like this. I gotta use like this "UserDefaults.standard.register(defaults: ["defaultIndex" : defaultIndex])"
 
 ## License
 
