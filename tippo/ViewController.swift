@@ -17,6 +17,22 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        var billAmount = 0.0
+        
+        if UserDefaults.standard.object(forKey: "billAmount") == nil {
+            UserDefaults.standard.register(defaults: ["billAmount" : billAmount])
+            UserDefaults.standard.register(defaults: ["endTime" : CFAbsoluteTimeGetCurrent()])
+        }
+        else {
+            billAmount = UserDefaults.standard.double(forKey: "billAmount")
+            let timeDiffInSec = CFAbsoluteTimeGetCurrent() - UserDefaults.standard.double(forKey: "endTime")
+            
+            if timeDiffInSec > 600 {
+                billAmount = 0.0
+            }
+        }
+        billText.text = String(format: "$%.2f", billAmount)
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -26,6 +42,12 @@ class ViewController: UIViewController {
         tipCalculator(self)
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(true)
+        let billAmount = Double(billText.text!) ?? 0
+        UserDefaults.standard.set(billAmount, forKey: "billAmount")
+        UserDefaults.standard.set(CFAbsoluteTimeGetCurrent(), forKey: "endTime")
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -33,6 +55,10 @@ class ViewController: UIViewController {
     
     @IBAction func onTap(_ sender: AnyObject) {
         view.endEditing(true)
+    }
+    
+    @IBAction func resetBillDisplay(_ sender: Any) {
+        billText.text = ""
     }
     
     @IBAction func tipCalculator(_ sender: AnyObject) {
