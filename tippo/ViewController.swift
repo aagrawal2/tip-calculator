@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var tipLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var tipSelection: UISegmentedControl!
+    var firstLoad = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +60,15 @@ class ViewController: UIViewController {
     
     @IBAction func resetBillDisplay(_ sender: Any) {
         billText.text = ""
+        if firstLoad {
+            firstLoad = false
+            UserDefaults.standard.set("USD", forKey: "selectedCurrCode")
+        }
+    }
+    
+    func getCurrencySymbol(currencyCode: String) -> String? {
+        let locale = NSLocale(localeIdentifier: currencyCode)
+        return locale.displayName(forKey: NSLocale.Key.currencySymbol, value: currencyCode)
     }
     
     @IBAction func tipCalculator(_ sender: AnyObject) {
@@ -67,8 +77,23 @@ class ViewController: UIViewController {
         let bill = Double(billText.text!) ?? 0
         let tip = bill * tipPercentage[tipSelection.selectedSegmentIndex]
         let total = bill + tip
-        tipLabel.text = String(format: "$%.2f", tip)
-        totalLabel.text = String(format: "$%.2f", total)
+        let currencyCode = UserDefaults.standard.string(forKey: "selectedCurrCode")
+        
+        if (currencyCode == nil || firstLoad) {
+            tipLabel.text = String(format: "$%.2f", tip)
+            totalLabel.text = String(format: "$%.2f", total)
+        }
+        else {
+            let currencySymbol = getCurrencySymbol(currencyCode: currencyCode!)
+            
+            if let unwrapped = currencySymbol {
+                tipLabel.text = String(format: "\(unwrapped)%.2f", tip)
+                totalLabel.text = String(format: "\(unwrapped)%.2f", total)
+            }
+            else {
+            }
+        }
+        
     }
 }
 
