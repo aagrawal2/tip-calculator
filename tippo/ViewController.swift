@@ -71,6 +71,17 @@ class ViewController: UIViewController {
         return locale.displayName(forKey: NSLocale.Key.currencySymbol, value: currencyCode)
     }
     
+    func animate() -> Void {        
+        self.tipLabel.alpha = 0
+        self.totalLabel.alpha = 0
+        UIView.animate(withDuration: 0.1, animations: {
+            self.tipLabel.backgroundColor = UIColor.lightGray
+            self.totalLabel.backgroundColor = UIColor.lightGray
+            self.tipLabel.alpha = 1
+            self.totalLabel.alpha = 1
+        })
+    }
+    
     @IBAction func tipCalculator(_ sender: AnyObject) {
         
         let tipPercentage = [0.1, 0.15, 0.2]
@@ -93,7 +104,7 @@ class ViewController: UIViewController {
             else {
             }
         }
-        
+        animate()
     }
 }
 
