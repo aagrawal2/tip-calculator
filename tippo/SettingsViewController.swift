@@ -10,33 +10,32 @@ import UIKit
 
 class SettingsViewController: UIViewController {
 
-    
+    var defaultIndex = 0
     @IBOutlet weak var tipDefaultSelection: UISegmentedControl!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        if UserDefaults.standard.object(forKey: "defaultIndex") == nil {
+            tipDefaultSelection.selectedSegmentIndex = defaultIndex
+            UserDefaults.standard.register(defaults: ["defaultIndex" : defaultIndex])
+        }
+        else {
+            defaultIndex = UserDefaults.standard.integer(forKey: "defaultIndex")
+            tipDefaultSelection.selectedSegmentIndex = defaultIndex
+        }
     }
-
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        UserDefaults.standard.set(defaultIndex, forKey: "defaultIndex")
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     
     @IBAction func setDefaultTip(_ sender: AnyObject) {
-        
-        let percentage = [0.1, 0.15, 0.2]
-        let defaultIndex = tipDefaultSelection.selectedSegmentIndex
-        let defaultPerc = percentage[defaultIndex]
-        
-        UserDefaults.standard.register(defaults: ["defaultIndex" : defaultIndex])
-        UserDefaults.standard.register(defaults: ["defaultTipPerc" : defaultPerc])
-        
-        UserDefaults.standard.set(defaultIndex, forKey: "defaultIndex")
-        UserDefaults.standard.set(defaultPerc, forKey: "defaultTipPerc")
-        
+        defaultIndex = tipDefaultSelection.selectedSegmentIndex
     }
     
     

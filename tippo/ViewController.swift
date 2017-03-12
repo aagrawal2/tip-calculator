@@ -17,53 +17,21 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        print("view did appear")
-        let defaultIndex = UserDefaults.standard.integer(forKey: "defaultIndex")
-        let defaultPerc = UserDefaults.standard.double(forKey: "defaultTipPerc")
-        print("defaultPerc=\(defaultPerc) defaultIndex=\(defaultIndex)")
-        tipSelection.selectedSegmentIndex = defaultIndex
-        tipCalculator(self)
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+        super.viewDidAppear(animated)
         let defaultIndex = UserDefaults.standard.integer(forKey: "defaultIndex")
-        let defaultPerc = UserDefaults.standard.double(forKey: "defaultTipPerc")
-        print("defaultPerc=\(defaultPerc) defaultIndex=\(defaultIndex)")
         tipSelection.selectedSegmentIndex = defaultIndex
         tipCalculator(self)
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        let defaultIndex = UserDefaults.standard.integer(forKey: "defaultIndex")
-        let defaultPerc = UserDefaults.standard.double(forKey: "defaultTipPerc")
-        print("defaultPerc=\(defaultPerc) defaultIndex=\(defaultIndex)")
-        tipSelection.selectedSegmentIndex = defaultIndex
-        tipCalculator(self)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        let defaultIndex = UserDefaults.standard.integer(forKey: "defaultIndex")
-        let defaultPerc = UserDefaults.standard.double(forKey: "defaultTipPerc")
-        print("defaultPerc=\(defaultPerc) defaultIndex=\(defaultIndex)")
-        tipSelection.selectedSegmentIndex = defaultIndex
-        tipCalculator(self)
-    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func onTap(_ sender: AnyObject) {
-        
         view.endEditing(true)
     }
     
