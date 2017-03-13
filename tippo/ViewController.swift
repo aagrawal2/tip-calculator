@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.billText.becomeFirstResponder()
         var billAmount = 0.0
         
         if UserDefaults.standard.object(forKey: "billAmount") == nil {
@@ -55,7 +55,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func onTap(_ sender: AnyObject) {
-        view.endEditing(true)
+        //view.endEditing(true)
     }
     
     @IBAction func resetBillDisplay(_ sender: Any) {

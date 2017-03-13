@@ -18,6 +18,7 @@ The following **optional** features are implemented:
 * [ ] UI animations 
 * [ ] Remembering the bill amount across app restarts (if <10mins)
 * [ ] Using locale-specific currency and currency thousands separators.
+* [ ] Making sure the keyboard is always visible and the bill amount is always the first responder. This way the user doesn't have to tap anywhere to use this app. Just launch the app and start typing.
 
 The following **additional** features are implemented:
 
@@ -25,7 +26,7 @@ The following **additional** features are implemented:
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://imgur.com/pTQDbsr.gif' title='Tip Calculator' width='' alt='tippo' />
+<img src='http://imgur.com/9voPmL8.gif' title='Tip Calculator' width='' alt='tippo' />
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
