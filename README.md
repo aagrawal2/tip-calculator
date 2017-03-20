@@ -4,7 +4,7 @@
 
 Submitted by: **Ankur Agrawal**
 
-Time spent: **8** hours spent in total
+Time spent: **9** hours spent in total
 
 ## User Stories
 
@@ -21,7 +21,7 @@ The following **optional** features are implemented:
 * [X] Making sure the keyboard is always visible and the bill amount is always the first responder. This way the user doesn't have to tap anywhere to use this app. Just launch the app and start typing.
 
 The following **additional** features are implemented:
-- [X] Added customer tip percentage functionality
+- [X] Added custom tip percentage functionality
 - [X] Improved UI
 
 ## Video Walkthrough 
