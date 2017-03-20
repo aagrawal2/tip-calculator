@@ -9,33 +9,41 @@
 import UIKit
 
 class SettingsViewController: UIViewController, UIPickerViewDataSource,UIPickerViewDelegate {
-
-    var defaultIndex = 0
+    
+    var defaultTipPerc = Float(0.15)
     var selectedCurrCode = "USD"
+    var currencyCodes = ["USD","GBP","EUR","CAD","AUD","INR","SGD","CHF","JPY"]
+    
+    @IBOutlet weak var defaultTipPercLabel: UILabel!
+    @IBOutlet weak var defaultTipPercSlider: UISlider!
     @IBOutlet weak var tipDefaultSelection: UISegmentedControl!
     @IBOutlet weak var currencyPicker: UIPickerView!
-    var currencyCodes = ["USD","GBP","EUR","CAD","AUD","INR","SGD","CHF","JPY"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if UserDefaults.standard.object(forKey: "defaultIndex") == nil {
-            tipDefaultSelection.selectedSegmentIndex = defaultIndex
-            UserDefaults.standard.register(defaults: ["defaultIndex" : defaultIndex])
+        if UserDefaults.standard.object(forKey: "defaultTipPerc") == nil
+        {
+            defaultTipPercSlider.value = defaultTipPerc
+            UserDefaults.standard.register(defaults: ["defaultTipPerc" : defaultTipPerc])
             UserDefaults.standard.register(defaults: ["selectedCurrCode": selectedCurrCode])
         }
         else {
-            defaultIndex = UserDefaults.standard.integer(forKey: "defaultIndex")
-            tipDefaultSelection.selectedSegmentIndex = defaultIndex
+            defaultTipPerc = UserDefaults.standard.float(forKey: "defaultTipPerc")
+            defaultTipPercSlider.value = defaultTipPerc
         }
-        
+        /*
+        let defaultTipPercStr = String(format: "%.2f", defaultTipPerc * 100)
+        defaultTipPercLabel.text = "Default Tip Percentage \(defaultTipPercStr)%:"
+        */
+        setDefaultTip(self)
         currencyPicker.dataSource = self
         currencyPicker.delegate = self
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        UserDefaults.standard.set(defaultIndex, forKey: "defaultIndex")
+        UserDefaults.standard.set(defaultTipPerc, forKey: "defaultTipPerc")
         UserDefaults.standard.set(selectedCurrCode, forKey: "selectedCurrCode")
     }
     
@@ -45,7 +53,9 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource,UIPickerV
     
     
     @IBAction func setDefaultTip(_ sender: AnyObject) {
-        defaultIndex = tipDefaultSelection.selectedSegmentIndex
+        defaultTipPerc = defaultTipPercSlider.value
+        let defaultTipPercStr = String(format: "%.2f", defaultTipPerc * 100)
+        defaultTipPercLabel.text = "Default Tip Percentage \(defaultTipPercStr) %:"
     }
     
     //MARK: Data Sources

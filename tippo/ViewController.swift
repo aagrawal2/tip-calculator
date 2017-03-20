@@ -11,9 +11,12 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak var billText: UITextField!
+    @IBOutlet weak var tipPercentageLabel: UILabel!
     @IBOutlet weak var tipLabel: UILabel!
     @IBOutlet weak var totalLabel: UILabel!
     @IBOutlet weak var tipSelection: UISegmentedControl!
+    @IBOutlet weak var tipPercentageSlider: UISlider!
+    
     var firstLoad = true
     
     override func viewDidLoad() {
@@ -37,9 +40,9 @@ class ViewController: UIViewController {
     }
 
     override func viewWillAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        let defaultIndex = UserDefaults.standard.integer(forKey: "defaultIndex")
-        tipSelection.selectedSegmentIndex = defaultIndex
+        super.viewDidAppear(animated)        
+        let defaultTipPerc = UserDefaults.standard.float(forKey: "defaultTipPerc")
+        tipPercentageSlider.value = defaultTipPerc
         tipCalculator(self)
     }
     
@@ -84,27 +87,30 @@ class ViewController: UIViewController {
     
     @IBAction func tipCalculator(_ sender: AnyObject) {
         
-        let tipPercentage = [0.1, 0.15, 0.2]
+        let tipPercentage = tipPercentageSlider.value
+        let tipPercentageStr = String(format: "%.2f", tipPercentage * 100)
+        tipPercentageLabel.text = "Tip \(tipPercentageStr) %:"
+                
         let bill = Double(billText.text!) ?? 0
-        let tip = bill * tipPercentage[tipSelection.selectedSegmentIndex]
+        let tip = bill * Double(tipPercentage)
         let total = bill + tip
         let currencyCode = UserDefaults.standard.string(forKey: "selectedCurrCode")
         
         if (currencyCode == nil || firstLoad) {
-            tipLabel.text = String(format: "$%.2f", tip)
-            totalLabel.text = String(format: "$%.2f", total)
+            tipLabel.text = String(format: "Tip: $%.2f", tip)
+            totalLabel.text = String(format: "Total: $%.2f", total)
         }
         else {
             let currencySymbol = getCurrencySymbol(currencyCode: currencyCode!)
             
             if let unwrapped = currencySymbol {
-                tipLabel.text = String(format: "\(unwrapped)%.2f", tip)
-                totalLabel.text = String(format: "\(unwrapped)%.2f", total)
+                tipLabel.text = String(format: "Tip:  \(unwrapped)%.2f", tip)
+                totalLabel.text = String(format: "Total: \(unwrapped)%.2f", total)
             }
             else {
             }
         }
-        animate()
+        //animate()
     }
 }
 
